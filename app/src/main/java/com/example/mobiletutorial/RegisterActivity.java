@@ -2,8 +2,12 @@ package com.example.mobiletutorial;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,9 +16,12 @@ import android.widget.Toast;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    EditText edUsername,edEmail,edPassword,edConfirm;
+    EditText edUsername,edEmail,edPassword,edConfirm,nbOfChildren;
+
     Button btn;
-    TextView ExsitingUser;
+    TextView ExistingUser;
+
+    private SQLiteDatabase db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,47 +31,70 @@ public class RegisterActivity extends AppCompatActivity {
         edEmail = findViewById(R.id.editTextRegEmail);
         edPassword = findViewById(R.id.editTextRegPasword);
         edConfirm = findViewById(R.id.editTextRegConfirmPasword);
+        nbOfChildren = findViewById(R.id.editTextNumberOfChildren);
         btn = findViewById(R.id.buttonRegister);
-        ExsitingUser = findViewById(R.id.textViewExistingUser);
+        ExistingUser = findViewById(R.id.textViewExistingUser);
 
-
-        ExsitingUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
-            }
-        });
+        DataBase dbHelper = new DataBase(this);
+        db = dbHelper.getWritableDatabase();
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username = edUsername.getText().toString();
-                String email = edEmail.getText().toString();
-                String password = edPassword.getText().toString();
-                String confirm = edConfirm.getText().toString();
-                DataBase db = new DataBase(getApplicationContext(),"HealthCare",null,1);
-
-                if(username.length()==0 || email.length()==0 || password.length()==0 || confirm.length()==0){
-                    Toast.makeText(getApplicationContext(),"Please Fill All Details",Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    if (password.compareTo(confirm) == 0) {
-                        if (isvalid(password)) {
-                            db.register(username,email,password);
-                            Toast.makeText(getApplicationContext(), "Registered Successfully", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
-                        }
-                        else{
-                            Toast.makeText(getApplicationContext(), "Password must contain ate least 8 characters,having letter,digit,and special symbol", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                    else{
-                        Toast.makeText(getApplicationContext(),"Make Sure To Confirm Passwords",Toast.LENGTH_SHORT).show();
-                    }
-                }
-
+                registerUser();
             }
         });
+
+
+
+
+    }
+
+    private void registerUser() {
+        String username = edUsername.getText().toString().trim();
+        String email = edEmail.getText().toString().trim();
+        String password = edPassword.getText().toString().trim();
+        String confpassword = edConfirm.getText().toString().trim();
+        String NbOfChildren = nbOfChildren.getText().toString().trim();
+
+        // Check if username or email is empty
+        if (username.isEmpty() || email.isEmpty() || password.isEmpty() || confpassword.isEmpty() || NbOfChildren.isEmpty()) {
+            Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Check if the username already exists in the database
+        Cursor cursor = db.rawQuery("SELECT * FROM parent WHERE username = ?", new String[]{username});
+        if (cursor.moveToFirst()) {
+            Toast.makeText(this, "Parent already exists", Toast.LENGTH_SHORT).show();
+            cursor.close();
+            return;
+        }
+        cursor.close();
+
+        if(!isvalid(password)){
+            Toast.makeText(this, "The Password is not Valid", Toast.LENGTH_SHORT).show();
+        }
+
+        // Insert the new user into the database
+        ContentValues values = new ContentValues();
+        values.put("username", username);
+        values.put("email", email);
+        values.put("password", password);
+        values.put("NbOfChildren", NbOfChildren);
+
+        long newRowId = db.insert("parent", null, values);
+        if (newRowId != -1) {
+            Toast.makeText(this, "Registration successful", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
+            startActivity(intent);
+        } else {
+            Toast.makeText(this, "Registration failed", Toast.LENGTH_SHORT).show();
+        }
+        Log.d("Registration", "Username: " + username);
+        Log.d("Registration", "Email: " + email);
+        Log.d("Registration", "Password: " + password);
+        Log.d("Registration", "New row ID: " + newRowId);
     }
 
     public static boolean isvalid(String passwordhere){

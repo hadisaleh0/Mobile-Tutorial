@@ -6,19 +6,46 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import androidx.annotation.Nullable;
+
 
 public class DataBase extends SQLiteOpenHelper {
 
-    public DataBase(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+
+    private static final String DATABASE_NAME ="Vaccination.db";
+    private static final int DATABASE_VERSION = 2;
+
+    // Parent Table
+    private static final String SQL_CREATE_PARENT_TABLE =
+            "CREATE TABLE IF NOT EXISTS parent (" +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "username TEXT," +
+                    "email TEXT," +
+                    "password TEXT," +
+                    "NbOfChildren INTEGER)";
+
+    // Children Table
+    private static final String SQL_CREATE_CHILDREN_TABLE =
+            "CREATE TABLE IF NOT EXISTS child (" +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "parent_id INTEGER," +
+                    "firstname TEXT," +
+                    "lastname TEXT," +
+                    "mothername TEXT," +
+                    "DateOfBirth TEXT," +
+                    "gender TEXT," +
+                    "bloodGroup TEXT," +
+                    "PlaceOfBirth TEXT," +
+                    "CompletedVaccines TEXT)";
+
+    public DataBase(Context context){
+            super(context,DATABASE_NAME,null,DATABASE_VERSION);
     }
+
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
-        String qry1 = "create table users(username text,email text,password text)";
-        db.execSQL(qry1);
+        db.execSQL(SQL_CREATE_PARENT_TABLE);
+        db.execSQL(SQL_CREATE_CHILDREN_TABLE);
     }
 
     @Override
@@ -26,28 +53,5 @@ public class DataBase extends SQLiteOpenHelper {
 
     }
 
-    public void register(String username, String email, String password){
-        ContentValues cv = new ContentValues();
-        cv.put("username",username);
-        cv.put("email",email);
-        cv.put("password",password);
-        SQLiteDatabase db = getWritableDatabase();
-        db.insert("users",null,cv);
-        db.close();
-    }
 
-    public int Login(String username,String password){
-        int result=0;
-        String str[] = new String[2];
-        str[0] = username;
-        str[1]= password;
-
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor c = db.rawQuery("select * from users where username=? and password=?",str);
-        if(c.moveToFirst()){
-            result=1;
-        }
-
-        return result;
-    }
 }

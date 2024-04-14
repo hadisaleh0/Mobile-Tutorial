@@ -32,13 +32,8 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        CardView FindDoctor = findViewById(R.id.cardFindDoctor);
-        FindDoctor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(HomeActivity.this,FindDoctorActivity.class));
-            }
-        });
+
+
 
     }
 }

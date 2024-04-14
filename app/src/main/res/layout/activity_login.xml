@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity"
     android:background="@drawable/back1"
-    >
+    tools:ignore="MissingClass">
 
   <TextView
       android:id="@+id/textView"

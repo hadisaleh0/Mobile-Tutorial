@@ -1,9 +1,19 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.MobileTutorial" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    <style name="Base.Theme.MobileTutorial" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+         Customize your light theme here.
+         <item name="colorPrimary">@color/lavender</item>
+         <item name="colorPrimaryVariant">@color/lavender</item>
+
+
+
     </style>
 
-    <style name="Theme.MobileTutorial" parent="Base.Theme.MobileTutorial" />
+
+    
+
 </resources>
+
+<!--<style name="splashScreenTheme" parent="Theme.MaterialComponents.Light.NoActionBar">-->
+<!--<item name="android:windowBackground">@drawable/splash_image</item>-->
+<!--</style>-->

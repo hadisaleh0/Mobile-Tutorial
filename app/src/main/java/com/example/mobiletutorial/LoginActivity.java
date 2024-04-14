@@ -1,10 +1,12 @@
 package com.example.mobiletutorial;
 
-import androidx.appcompat.app.AppCompatActivity;
+
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,14 +14,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 public class LoginActivity extends AppCompatActivity {
 
     EditText edUsername,edPassword;
     Button btn;
     TextView tv;
+    Context context;
+    DataBase dbHelper;
+    SQLiteDatabase db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_login);
 
         edUsername = findViewById(R.id.editTextName);
@@ -27,42 +35,46 @@ public class LoginActivity extends AppCompatActivity {
         btn = findViewById(R.id.buttonLogin);
         tv = findViewById(R.id.textViewNewUser);
 
+        dbHelper = new DataBase(this);
+        db = dbHelper.getReadableDatabase();
+
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this,HomeActivity.class));
-//                String username = edUsername.getText().toString();
-//                String password = edPassword.getText().toString();
-//                DataBase db = new DataBase(getApplicationContext(),"HealthCare",null,1);
-//
-//                if(username.length()==0 || password.length()==0){
-//
-//                    Toast.makeText(getApplicationContext(),"Please fill all details",Toast.LENGTH_SHORT).show();
-//                }
-//                else {
-//                    if (db.Login(username, password) == 1) {
-//                        Toast.makeText(getApplicationContext(), "Login Success", Toast.LENGTH_SHORT).show();
-//
-//                        SharedPreferences sharedprefernces = getSharedPreferences("shared_prefs", Context.MODE_PRIVATE);
-//                        SharedPreferences.Editor editor = sharedprefernces.edit();
-//                        editor.putString("username",username);
-//                        // to save our data with key and value.
-//                        editor.apply();
-//
-//                        startActivity(new Intent(LoginActivity.this,HomeActivity.class));
-//                    }
-//                    else{
-//                        Toast.makeText(getApplicationContext(), "Invalid Username and Password", Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-           }
-     });
+                loginParent();
+            }
+        });
 
         tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
+                Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
+                startActivity(intent);
             }
         });
+
     }
+
+
+    private void loginParent() {
+        String username = edUsername.getText().toString().trim();
+        String password = edPassword.getText().toString().trim();
+
+
+        Cursor cursor = db.rawQuery("SELECT * FROM parent WHERE username = ? AND password = ?",
+                new String[]{username, password});
+
+        if (cursor.moveToFirst()) {
+            // User exists, proceed to home activity or wherever you want
+            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+            finish();
+        } else {
+            // User does not exist or invalid credentials, show error message
+            Toast.makeText(this, "Invalid username or password", Toast.LENGTH_SHORT).show();
+        }
+
+        cursor.close();
+    }
+
+
 }
