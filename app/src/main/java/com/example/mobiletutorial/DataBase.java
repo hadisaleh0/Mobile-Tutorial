@@ -12,7 +12,7 @@ public class DataBase extends SQLiteOpenHelper {
 
 
     private static final String DATABASE_NAME ="Vaccination.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 4;
 
     // Parent Table
     private static final String SQL_CREATE_PARENT_TABLE =
@@ -21,6 +21,7 @@ public class DataBase extends SQLiteOpenHelper {
                     "username TEXT," +
                     "email TEXT," +
                     "password TEXT," +
+                    "parentProfile blob," +
                     "NbOfChildren INTEGER)";
 
     // Children Table

@@ -13,7 +13,7 @@
       android:id="@+id/textView"
       android:layout_width="272dp"
       android:layout_height="59dp"
-      android:text="@string/_24_7_healthcare"
+      android:text="Vax Tracker"
       android:textColor="@color/purple_200"
       android:textSize="34sp"
       android:textStyle="bold"

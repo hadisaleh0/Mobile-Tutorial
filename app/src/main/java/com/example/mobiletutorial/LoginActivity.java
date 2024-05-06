@@ -24,6 +24,7 @@ public class LoginActivity extends AppCompatActivity {
     Context context;
     DataBase dbHelper;
     SQLiteDatabase db;
+    Parent parent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +66,12 @@ public class LoginActivity extends AppCompatActivity {
                 new String[]{username, password});
 
         if (cursor.moveToFirst()) {
+            SharedPreferences sharedPreferences = getSharedPreferences("shared_prefs", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("username", username);
+            editor.apply();
+
+
             // User exists, proceed to home activity or wherever you want
             startActivity(new Intent(LoginActivity.this, HomeActivity.class));
             finish();

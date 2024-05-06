@@ -2,12 +2,19 @@ package com.example.mobiletutorial;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.util.Calendar;
 
 public class ParentDataSource {
 
@@ -17,6 +24,8 @@ public class ParentDataSource {
     public ParentDataSource(Context context){ dbHelper = new DataBase(context);}
 
 
+
+
     public void open() throws SQLException{
             database = dbHelper.getWritableDatabase();
     }
@@ -24,7 +33,7 @@ public class ParentDataSource {
     public void close() {dbHelper.close();}
 
 
-    public boolean insertContact(Parent p) {
+    public boolean insertParent(Parent p) {
         boolean didSucceed = false;
         try {
             ContentValues initialValues = new ContentValues();
@@ -39,7 +48,68 @@ public class ParentDataSource {
         return didSucceed;
     }
 
+    public boolean updateParentPhoto(Parent p) {
+        boolean didSucceed = false;
+        try {
+            String UserName = p.getUserName();
+            ContentValues updatedValues = new ContentValues();
+            updatedValues.put("username", p.getUserName());
+            updatedValues.put("password", p.getPassword());
+            updatedValues.put("email", p.getEmail());
+            updatedValues.put("NbOfChildren", p.getNbOfChildren());
+            if (p.getParentPhoto() != null) {
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                p.getParentPhoto().compress(Bitmap.CompressFormat.PNG, 100, baos);
+                byte[] photo = baos.toByteArray();
+                updatedValues.put("parentProfile", photo);
+            }
+            didSucceed = database.update("parent", updatedValues, "username = " + UserName, null) > 0;
+        } catch (Exception ignored) {
+        }
+        return didSucceed;
+    }
 
+    public Parent getSpecificParent(String UserName) {
+        Parent p = new Parent();
+
+        Cursor cursor = database.rawQuery("SELECT * FROM parent WHERE username = ?", new String[] {UserName});
+
+        //Cursor cursor = database.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            p.setParentId(cursor.getInt(0));
+            p.setUserName(cursor.getString(1));
+            p.setEmail(cursor.getString(2));
+            p.setPassword(cursor.getString(3));
+            p.setNbOfChildren(cursor.getInt(5));
+            byte[] photo = cursor.getBlob(4);
+            if (photo != null) {
+                ByteArrayInputStream bais = new ByteArrayInputStream(photo);
+                Bitmap contactPhoto = BitmapFactory.decodeStream(bais);
+                p.setParentPhoto(contactPhoto);
+            }
+        }
+        cursor.close();
+        return p;
+    }
+
+//    public int updateParentPhoto(String username, Bitmap photo) {
+//        ContentValues values = new ContentValues();
+//        values.put("photo", getBytesFromBitmap(photo));
+//
+//        // Add null check for database
+//        if (database != null) {
+//            return database.update("parent", values, "username = ?", new String[]{username});
+//        } else {
+//            Log.e("ParentDataSource", "Database is null");
+//            return 0;
+//        }
+//    }
+
+    private byte[] getBytesFromBitmap(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        return stream.toByteArray();
+    }
 
 
 }

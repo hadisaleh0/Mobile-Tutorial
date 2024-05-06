@@ -44,8 +44,13 @@ public class RegisterActivity extends AppCompatActivity {
                 registerUser();
             }
         });
-
-
+        ExistingUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
     }
@@ -74,6 +79,9 @@ public class RegisterActivity extends AppCompatActivity {
 
         if(!isvalid(password)){
             Toast.makeText(this, "The Password is not Valid", Toast.LENGTH_SHORT).show();
+            edPassword.setText("");
+            edConfirm.setText("");
+            return;
         }
 
         // Insert the new user into the database
