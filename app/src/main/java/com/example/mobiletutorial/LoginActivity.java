@@ -66,9 +66,11 @@ public class LoginActivity extends AppCompatActivity {
                 new String[]{username, password});
 
         if (cursor.moveToFirst()) {
+            int parentId = cursor.getInt(0);
             SharedPreferences sharedPreferences = getSharedPreferences("shared_prefs", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("username", username);
+            editor.putInt("id",parentId);
             editor.apply();
 
 

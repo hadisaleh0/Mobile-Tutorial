@@ -21,19 +21,20 @@ public class ChildDataSource {
 
     public void close(){dbHelper.close();}
 
-    public boolean insertContact(Children c) {
+    public boolean insertChild(Children c) {
         boolean didSucceed = false;
         try {
             ContentValues initialValues = new ContentValues();
             initialValues.put("firstName", c.getFirstName());
             initialValues.put("lastName", c.getLastName());
+            initialValues.put("parent_id",c.getParentId());
             initialValues.put("motherName", c.getMotherName());
             initialValues.put("gender", c.getGender());
             initialValues.put("bloodgroup", c.getBloodgroup());
             initialValues.put("PlaceOfBirth", c.getPlaceOfBirth());
-            initialValues.put("CompletedVaccines", Arrays.toString(c.getCompletedVaccines()));
+//            initialValues.put("CompletedVaccines", Arrays.toString(c.getCompletedVaccines()));
             initialValues.put("DateOfBirth", String.valueOf(c.getDateOfBirth().getTimeInMillis()));
-            didSucceed = database.insert("parent", null, initialValues) > 0;
+            didSucceed = database.insert("child", null, initialValues) > 0;
         } catch (Exception e) {
             Log.d("My Database", "Something went wrong!");
         }

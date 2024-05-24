@@ -11,8 +11,20 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DataBase extends SQLiteOpenHelper {
 
 
+
+    private SQLiteDatabase database;
+    private static DataBase instance;
+
     private static final String DATABASE_NAME ="Vaccination.db";
     private static final int DATABASE_VERSION = 4;
+
+
+    public static synchronized DataBase getInstance(Context context) {
+        if (instance == null) {
+            instance = new DataBase(context.getApplicationContext());
+        }
+        return instance;
+    }
 
     // Parent Table
     private static final String SQL_CREATE_PARENT_TABLE =
@@ -52,6 +64,16 @@ public class DataBase extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+    }
+
+    public void openDatabase() {
+        if (database == null || !database.isOpen()) {
+            database = this.getWritableDatabase();
+        }
+    }
+
+    public SQLiteDatabase getDatabase() {
+        return database;
     }
 
 

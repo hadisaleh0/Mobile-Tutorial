@@ -5,6 +5,25 @@ import java.util.Date;
 import java.util.List;
 
 public class Children {
+    private int id;
+    private int ParentId;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getParentId() {
+        return ParentId;
+    }
+
+    public void setParentId(int parentId) {
+        ParentId = parentId;
+    }
+
     private String firstName;
     private String lastName;
     private String motherName;
