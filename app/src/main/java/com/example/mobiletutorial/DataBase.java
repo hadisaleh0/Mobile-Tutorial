@@ -16,7 +16,7 @@ public class DataBase extends SQLiteOpenHelper {
     private static DataBase instance;
 
     private static final String DATABASE_NAME ="Vaccination.db";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 6;
 
 
     public static synchronized DataBase getInstance(Context context) {

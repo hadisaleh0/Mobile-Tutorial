@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -73,6 +74,8 @@ public class AddChildrenActivity extends AppCompatActivity implements CustomDial
                     child.setPlaceOfBirth(placeOfBirth);
                     dataSource.open();
                     wasSuccessful = dataSource.insertChild(child);
+                    Intent intent = new Intent(AddChildrenActivity.this,HomeActivity.class);
+                    startActivity(intent);
                 } catch (Exception ignored) {
 
                 }

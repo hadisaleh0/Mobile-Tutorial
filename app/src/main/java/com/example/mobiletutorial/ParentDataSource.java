@@ -70,10 +70,10 @@ public class ParentDataSource {
         return didSucceed;
     }
 
-    public Parent getSpecificParent(String UserName) {
+    public Parent getSpecificParent(int Id) {
         Parent p = new Parent();
 
-        Cursor cursor = database.rawQuery("SELECT * FROM parent WHERE username = ?", new String[] {UserName});
+        Cursor cursor = database.rawQuery("SELECT * FROM parent WHERE id = ?", new String[] {String.valueOf(Id)});
 
         //Cursor cursor = database.rawQuery(query, null);
         if (cursor.moveToFirst()) {
@@ -105,6 +105,37 @@ public class ParentDataSource {
 //            return 0;
 //        }
 //    }
+
+
+    public boolean updateParent(Parent p) {
+        boolean didSucceed = false;
+        try {
+            open();
+            long rowID = p.getParentId();
+            Log.e("hi", String.valueOf(rowID));
+            Log.e("hi", String.valueOf(rowID));
+            Log.e("hi", String.valueOf(rowID));
+            Log.e("hi", String.valueOf(rowID));
+            ContentValues updatedValues = new ContentValues();
+            updatedValues.put("username", p.getUserName());
+            Log.e("hi",p.getUserName());
+            updatedValues.put("email", p.getEmail());
+            updatedValues.put("password", p.getPassword());
+            updatedValues.put("NbOfChildren", p.getNbOfChildren());
+            if (p.getParentPhoto() != null) {
+                Log.e("photo",p.getParentPhoto().toString());
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                p.getParentPhoto().compress(Bitmap.CompressFormat.PNG, 100, baos);
+                byte[] photo = baos.toByteArray();
+                updatedValues.put("parentProfile", photo);
+            }
+            didSucceed = database.update("parent", updatedValues, "id = " + rowID, null) > 0;
+        } catch (Exception ignored) {
+        }finally {
+            close();
+        }
+        return didSucceed;
+    }
 
     private byte[] getBytesFromBitmap(Bitmap bitmap) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();

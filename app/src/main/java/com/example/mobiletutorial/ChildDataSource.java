@@ -4,8 +4,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
 import android.util.Log;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
 
 public class ChildDataSource {
@@ -40,6 +42,8 @@ public class ChildDataSource {
         }
         return didSucceed;
     }
+
+
 
 
 }

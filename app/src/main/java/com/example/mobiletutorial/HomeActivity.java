@@ -38,21 +38,7 @@ public class HomeActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         String username = sharedPreferences.getString("username","").toString();
         int parentId = sharedPreferences.getInt("id",0);
-//        @SuppressLint("Recycle") Cursor cursor = database.rawQuery("SELECT * FROM parent WHERE username = ?", new String[] {username});
-//        int Id = cursor.getInt(0);
-//        int Id=0;
-//        if (database != null) {
-//            @SuppressLint("Recycle") Cursor cursor = database.rawQuery("SELECT * FROM parent WHERE username = ?", new String[] {username});
-//            if (cursor != null) {
-//                if (cursor.moveToFirst()) {
-//                    do {
-//                         Id = cursor.getInt(0);
-//                    } while (cursor.moveToNext());
-//                }
-//            }
-//            cursor.close();
-//        }
-//        editor.putInt("id",Id);
+
         Toast.makeText(getApplicationContext(),"Welcome "+username,Toast.LENGTH_SHORT).show();
 
         wlc.setText("Welcome " +username);

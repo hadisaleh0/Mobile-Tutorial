@@ -15,6 +15,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -24,6 +25,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -40,7 +42,7 @@ public class ListActivity extends AppCompatActivity {
 
     SQLiteDatabase database;
     DataBase dbHelper;
-    ParentDataSource dataSource;
+    TextView username,email,nbOfChildren;
 
 
     public void open() throws SQLException {
@@ -63,21 +65,16 @@ public class ListActivity extends AppCompatActivity {
                                 Bitmap scaledPhoto = Bitmap.createScaledBitmap(
                                         photo, pixels, pixels, true);
                                 parentProfile.setImageBitmap(scaledPhoto);
-//                                SharedPreferences sharedprefernces = getSharedPreferences("shared_prefs", Context.MODE_PRIVATE);
-//                                String userName = sharedprefernces.getString("username","").toString();
-//                                 dataSource.updateParentPhoto(currentParent);
+                                SharedPreferences sharedprefernces = getSharedPreferences("shared_prefs", Context.MODE_PRIVATE);
+                                int Id = sharedprefernces.getInt("id",0);
+                                Log.e("hi", String.valueOf(Id));
+                                ParentDataSource ds = new ParentDataSource(ListActivity.this);
+                                //currentParent = ds.getSpecificParent(Id);
+                                Log.e("name",currentParent.getUserName());
+                                currentParent.setParentPhoto(scaledPhoto);
+                                Log.e("name",currentParent.getParentPhoto().toString());
+                                ds.updateParent(currentParent);
 
-//                                boolean didSucceed = false;
-//                                String username = currentParent.getUserName();
-//                                currentParent.setParentPhoto(scaledPhoto);
-//                                ContentValues initialValues = new ContentValues();
-//                                if (currentParent.getParentPhoto() != null) {
-//                                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//                                    currentParent.getParentPhoto().compress(Bitmap.CompressFormat.PNG, 100, baos);
-//                                    byte[] ProfilePhoto = baos.toByteArray();
-//                                    initialValues.put("parentProfile", ProfilePhoto);
-//                                }
-//                                didSucceed = database.update("parent", initialValues, "_id = " + username, null) > 0;
                             }
                         }
                     });
@@ -92,13 +89,33 @@ public class ListActivity extends AppCompatActivity {
         LogOut();
 
 
-        SharedPreferences sharedprefernces = getSharedPreferences("shared_prefs", Context.MODE_PRIVATE);
-        String userName = sharedprefernces.getString("username","").toString();
+
 
         ParentDataSource ds = new ParentDataSource(this);
+
         ds.open();
-        currentParent = ds.getSpecificParent(userName);
-//        ds.close();
+
+        SharedPreferences sharedprefernces = getSharedPreferences("shared_prefs", Context.MODE_PRIVATE);
+        String userName = sharedprefernces.getString("username","").toString();
+        int Id = sharedprefernces.getInt("id",0);
+
+
+       currentParent = ds.getSpecificParent(Id);
+
+       username.setText(currentParent.getUserName());
+       email.setText(currentParent.getEmail());
+       String nbofchildren =String.valueOf(currentParent.getNbOfChildren());
+       nbOfChildren.setText(nbofchildren);
+        Bitmap photo = currentParent.getParentPhoto();
+        float density = ListActivity.this.getResources().getDisplayMetrics().density;
+        int dp = 140;
+        int pixels = (int) ((dp * density) + 0.7);
+        Bitmap scaledPhoto = Bitmap.createScaledBitmap(
+                photo, pixels, pixels, true);
+       parentProfile.setImageBitmap(scaledPhoto);
+
+
+       ds.close();
     }
 
 
@@ -197,5 +214,8 @@ public class ListActivity extends AppCompatActivity {
         parentProfile = findViewById(R.id.contactProfileImage);
         backButton = findViewById(R.id.imageViewBackToHomeFromSettings);
         logOut = findViewById(R.id.buttonLogOut);
+        username = findViewById(R.id.textViewUserNameSettings);
+        email = findViewById(R.id.textViewEmailSettings);
+        nbOfChildren = findViewById(R.id.textViewNbOfChildrenSettings);
     }
 }
