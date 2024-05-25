@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#1DB06F"
+    android:orientation="vertical"
+    android:gravity="end">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textViewChangeUserName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:textSize="20dp"
+            android:text="Change Username:" />
+
+        <EditText
+            android:id="@+id/editTextChangeUserName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="20"
+            android:textSize="20dp"
+            android:layout_margin="10dp"
+            android:inputType="text"
+            android:hint="UserName" />
+
+        <TextView
+            android:id="@+id/textViewChangeEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:textSize="20dp"
+            android:text="Change Email:" />
+
+        <EditText
+            android:id="@+id/editTextChangeEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:layout_margin="10dp"
+            android:textSize="20dp"
+            android:inputType="textEmailAddress"
+            android:hint="Email" />
+
+        <TextView
+            android:id="@+id/textViewChangeNbOfChildren"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:textSize="20dp"
+            android:text="Number Of Children:" />
+
+        <EditText
+            android:id="@+id/editTextChangeNumberOfChildren"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:layout_margin="10dp"
+            android:textSize="20dp"
+            android:inputType="number"
+            android:hint="Nb of Children" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/buttonCancelChange"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="cancel"
+                android:textColor="@color/black" />
+
+            <Button
+                android:id="@+id/buttonSaveChange"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Save"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</LinearLayout>

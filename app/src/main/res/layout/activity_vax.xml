@@ -8,48 +8,16 @@
     tools:context=".HomeActivity">
 
 
-    <LinearLayout
-        android:id="@+id/navbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/gridLayout"
-        android:layout_alignStart="@+id/gridLayout"
-        android:layout_alignEnd="@+id/gridLayout"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="-20dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="-20dp"
-        android:layout_marginBottom="-50dp"
-
-        android:orientation="horizontal">
-
-
-            <ImageView
-                android:id="@+id/imageSettingsList"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:contentDescription="display_list_of_contacts"
-                android:src="@drawable/list" />
-
-
-        <ImageView
-            android:id="@+id/imageAddChild"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="200dp"
-            android:contentDescription="display_settings"
-            android:src="@drawable/user" />
-
-
-    </LinearLayout>
-
     <TextView
         android:id="@+id/titleHome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/navbar"
-        android:layout_marginTop="70dp"
-        android:layout_marginStart="100dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="77dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="74dp"
         android:text="24*7 HEALTHCARE"
         android:textColor="#fff"
         android:textSize="30dp"
@@ -67,7 +35,7 @@
         android:rowCount="3">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardLabTest"
+            android:id="@+id/cardInfluenza"
             android:layout_width="wrap_content"
             android:layout_height="132dp"
             android:layout_row="0"
@@ -95,7 +63,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Lab Test"
+                    android:text="Influenza"
                     android:textAlignment="center"
                     android:textColor="@color/colorRed"
                     android:textStyle="bold" />
@@ -103,7 +71,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardBuyMedicine"
+            android:id="@+id/cardHpvVax"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_row="0"
@@ -131,7 +99,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Buy Medicine"
+                    android:text="Hpv"
                     android:textAlignment="center"
                     android:textColor="@color/colorRed"
                     android:textStyle="bold" />
@@ -139,7 +107,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardFindDoctor"
+            android:id="@+id/cardPolioVax"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_row="1"
@@ -167,7 +135,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Find Doctor"
+                    android:text="Polio"
                     android:textAlignment="center"
                     android:textColor="@color/colorRed"
                     android:textStyle="bold" />
@@ -175,7 +143,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardHealthDoctor"
+            android:id="@+id/cardMumpsVax"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_row="1"
@@ -203,7 +171,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Health Articles"
+                    android:text="Mumps"
                     android:textAlignment="center"
                     android:textColor="@color/colorRed"
                     android:textStyle="bold" />
@@ -211,7 +179,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardOrederDetails"
+            android:id="@+id/cardBCGVax"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_row="2"
@@ -239,7 +207,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Order Details"
+                    android:text="BCG"
                     android:textAlignment="center"
                     android:textColor="@color/colorRed"
                     android:textStyle="bold" />
@@ -247,7 +215,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardVaxInfo"
+            android:id="@+id/cardExit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_row="2"
@@ -275,7 +243,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Vax Info"
+                    android:text="Back"
                     android:textAlignment="center"
                     android:textColor="@color/colorRed"
                     android:textStyle="bold" />

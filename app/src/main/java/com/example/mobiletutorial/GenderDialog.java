@@ -35,7 +35,7 @@ public class GenderDialog extends DialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState){
-        final View view = inflater.inflate(R.layout.prefix_dialog,container);
+        final View view = inflater.inflate(R.layout.gender_dialog,container);
         cancel = view.findViewById(R.id.buttonCancelPre);
         select = view.findViewById(R.id.buttonSelectPre);
         iniLayout(view);

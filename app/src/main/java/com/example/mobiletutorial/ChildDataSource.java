@@ -2,12 +2,14 @@ package com.example.mobiletutorial;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ChildDataSource {
@@ -43,7 +45,26 @@ public class ChildDataSource {
         return didSucceed;
     }
 
-
+    public ArrayList<Children> getAllContacts(int id) {
+        String query = "Select * from child where parent_id = " + id;
+        ArrayList<Children> children = new ArrayList<>();
+        try {
+            Cursor cursor = database.rawQuery(query, null);
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                Children c = new Children();
+                c.setId(cursor.getInt(0));
+                c.setFirstName(cursor.getString(2));
+                c.setLastName(cursor.getString(3));
+                cursor.moveToNext();
+                children.add(c);
+            }
+            cursor.close();
+        } catch (Exception e) {
+            children = new ArrayList<>();
+        }
+        return children;
+    }
 
 
 }

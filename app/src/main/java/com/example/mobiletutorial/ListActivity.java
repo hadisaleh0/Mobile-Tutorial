@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
 import android.content.ContentValues;
@@ -32,13 +33,13 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.io.ByteArrayOutputStream;
 
-public class ListActivity extends AppCompatActivity {
+public class ListActivity extends AppCompatActivity implements EditProfileDialog.ProfileDialogListener {
 
     Parent currentParent;
     final int PERMISSION_REQUEST_CAMERA = 103;
     final int PERMISSION_REQUEST_PHONE = 102;
     ImageView parentProfile,backButton;
-    Button logOut;
+    Button logOut,editProfile;
 
     SQLiteDatabase database;
     DataBase dbHelper;
@@ -87,6 +88,7 @@ public class ListActivity extends AppCompatActivity {
         initCameraButton();
         GoBackToHome();
         LogOut();
+        initProfileDialog();
 
 
 
@@ -106,12 +108,12 @@ public class ListActivity extends AppCompatActivity {
        email.setText(currentParent.getEmail());
        String nbofchildren =String.valueOf(currentParent.getNbOfChildren());
        nbOfChildren.setText(nbofchildren);
-        Bitmap photo = currentParent.getParentPhoto();
-        float density = ListActivity.this.getResources().getDisplayMetrics().density;
-        int dp = 140;
-        int pixels = (int) ((dp * density) + 0.7);
-        Bitmap scaledPhoto = Bitmap.createScaledBitmap(
-                photo, pixels, pixels, true);
+       Bitmap photo = currentParent.getParentPhoto();
+       float density = ListActivity.this.getResources().getDisplayMetrics().density;
+       int dp = 140;
+       int pixels = (int) ((dp * density) + 0.7);
+       Bitmap scaledPhoto = Bitmap.createScaledBitmap(
+               photo, pixels, pixels, true);
        parentProfile.setImageBitmap(scaledPhoto);
 
 
@@ -210,6 +212,18 @@ public class ListActivity extends AppCompatActivity {
         });
     }
 
+    private void initProfileDialog(){
+        editProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fm = getSupportFragmentManager();
+                EditProfileDialog dialog = new EditProfileDialog();
+                dialog.show(fm,"Profile");
+            }
+        });
+    }
+
+
     private void initLayouts(){
         parentProfile = findViewById(R.id.contactProfileImage);
         backButton = findViewById(R.id.imageViewBackToHomeFromSettings);
@@ -217,5 +231,18 @@ public class ListActivity extends AppCompatActivity {
         username = findViewById(R.id.textViewUserNameSettings);
         email = findViewById(R.id.textViewEmailSettings);
         nbOfChildren = findViewById(R.id.textViewNbOfChildrenSettings);
+        editProfile = findViewById(R.id.buttonEditProfile);
+    }
+
+    @Override
+    public void ProfileSave(String user, String Email, String nbofChildren) {
+        username.setText(user);
+        email.setText(Email);
+        nbOfChildren.setText(nbofChildren);
+        currentParent.setUserName(user);
+        currentParent.setEmail(Email);
+        currentParent.setNbOfChildren(Integer.parseInt(nbofChildren));
+        ParentDataSource ds = new ParentDataSource(ListActivity.this);
+        ds.updateParent(currentParent);
     }
 }
