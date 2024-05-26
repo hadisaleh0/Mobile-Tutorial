@@ -10,7 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -19,22 +18,22 @@ public class ParentAdapter extends RecyclerView.Adapter {
 
     boolean isDeleting;
     Context context;
-    private ArrayList<Children> children;
+    private ArrayList<Children> childrenData;
     private View.OnClickListener onItemClickListener;
 
-    public ParentAdapter(ArrayList <Children> children, Context context) {
+    public ParentAdapter(ArrayList <Children> contacts, Context context) {
         this.context = context;
-        this.children = children;
+        childrenData = contacts;
         onItemClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 RecyclerView.ViewHolder holder = (RecyclerView.ViewHolder)
                         v.getTag();
                 int position = holder.getAdapterPosition();
-                int child = children.get(position).getParentId();
+                int childId = childrenData.get(position).getId();
                 Intent intent = new Intent(context,
-                        MainActivity.class);
-                intent.putExtra("parentId", child);
+                        HomeActivity.class);
+                intent.putExtra("childId", childId);
                 context.startActivity(intent);
             }
         };
@@ -42,6 +41,7 @@ public class ParentAdapter extends RecyclerView.Adapter {
 
     public void setDeleting(boolean deleting) {
         isDeleting = deleting;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -54,58 +54,58 @@ public class ParentAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        ChildViewHolder contactVH = (ChildViewHolder) holder;
-        contactVH.getContactTextView().
-                setText(children.get(position).getFirstName());
-//        contactVH.getPhoneTextView().
-//                setText(children.get(position).getPhoneNumber());
-//        if (isDeleting) {
-//            contactVH.getDeleteImageButton().setVisibility(View.VISIBLE);
-//            contactVH.getDeleteImageButton().setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    deleteItem(holder.getAdapterPosition());
-//                }
-//            });
-//        } else {
-//            contactVH.getDeleteImageButton().setVisibility(View.INVISIBLE);
-//        }
+        ChildViewHolder childVH = (ChildViewHolder) holder;
+        childVH.getContactTextView().
+                setText(childrenData.get(position).getFirstName());
+        childVH.getBloodGroupTextView().
+                setText(childrenData.get(position).getBloodgroup());
+        if (isDeleting) {
+            childVH.getDeleteImageButton().setVisibility(View.VISIBLE);
+            childVH.getDeleteImageButton().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    deleteItem(holder.getAdapterPosition());
+                }
+            });
+        } else {
+            childVH.getDeleteImageButton().setVisibility(View.INVISIBLE);
+        }
     }
 
-//    private void deleteItem(int position) {
-//        ChildDataSource ds = new ChildDataSource(context);
-//        try {
-//            ds.open();
-//            int contactId = children.get(position).getId();
-//            boolean didDelete = ds.deleteContact(contactId);
-//            ds.close();
-//            if (didDelete) {
-//                children.remove(position);
-//                notifyDataSetChanged();
-//            } else {
-//                Toast.makeText(context, "Delete Failed", Toast.LENGTH_LONG).show();
-//            }
-//        } catch (Exception e) {
-//            Toast.makeText(context, "Delete Failed", Toast.LENGTH_LONG).show();
-//        }
-//    }
+    private void deleteItem(int position) {
+        ChildDataSource ds = new ChildDataSource(context);
+        try {
+            ds.open();
+            int childId = childrenData.get(position).getId();
+            boolean didDelete = ds.deleteChild(childId);
+            ds.close();
+            if (didDelete) {
+                childrenData.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, childrenData.size());
+            } else {
+                Toast.makeText(context, "Delete Failed", Toast.LENGTH_LONG).show();
+            }
+        } catch (Exception e) {
+            Toast.makeText(context, "Delete Failed", Toast.LENGTH_LONG).show();
+        }
+    }
 
     @Override
     public int getItemCount() {
-        return children.size();
+        return childrenData.size();
     }
 
     public class ChildViewHolder extends RecyclerView.ViewHolder {
 
-        CardView card;
-        TextView nameTextView;
+        TextView nameTextView, BloodGroupTextView;
         ImageButton deleteImageButton;
 
         public ChildViewHolder(@NonNull View itemView) {
             super(itemView);
-            card = itemView.findViewById(R.id.cardLabTest);
-            nameTextView = itemView.findViewById(R.id.textChildName);
-            //deleteImageButton = itemView.findViewById(R.id.imageButtonDelete);
+            nameTextView = itemView.findViewById(R.id.textViewChildFirstName);
+            BloodGroupTextView = itemView.findViewById(R.id.textViewChildBloodGroup);
+            deleteImageButton = itemView.findViewById(R.id.imageButtonDelete);
             itemView.setTag(this);
             itemView.setOnClickListener(onItemClickListener);
         }
@@ -114,12 +114,12 @@ public class ParentAdapter extends RecyclerView.Adapter {
             return nameTextView;
         }
 
-//        public TextView getPhoneTextView() {
-//            return phoneTextView;
-//        }
+        public TextView getBloodGroupTextView() {
+            return BloodGroupTextView;
+        }
 
-//        public ImageButton getDeleteImageButton() {
-//            return deleteImageButton;
-//        }
+        public ImageButton getDeleteImageButton() {
+            return deleteImageButton;
+        }
     }
 }

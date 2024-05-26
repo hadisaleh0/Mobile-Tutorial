@@ -70,7 +70,6 @@ public class ListActivity extends AppCompatActivity implements EditProfileDialog
                                 int Id = sharedprefernces.getInt("id",0);
                                 Log.e("hi", String.valueOf(Id));
                                 ParentDataSource ds = new ParentDataSource(ListActivity.this);
-                                //currentParent = ds.getSpecificParent(Id);
                                 Log.e("name",currentParent.getUserName());
                                 currentParent.setParentPhoto(scaledPhoto);
                                 Log.e("name",currentParent.getParentPhoto().toString());
@@ -109,12 +108,27 @@ public class ListActivity extends AppCompatActivity implements EditProfileDialog
        String nbofchildren =String.valueOf(currentParent.getNbOfChildren());
        nbOfChildren.setText(nbofchildren);
        Bitmap photo = currentParent.getParentPhoto();
-       float density = ListActivity.this.getResources().getDisplayMetrics().density;
-       int dp = 140;
-       int pixels = (int) ((dp * density) + 0.7);
-       Bitmap scaledPhoto = Bitmap.createScaledBitmap(
-               photo, pixels, pixels, true);
-       parentProfile.setImageBitmap(scaledPhoto);
+        if (photo != null) {
+            float density = ListActivity.this.getResources().getDisplayMetrics().density;
+            int dp = 140;
+            int pixels = (int) ((dp * density) + 0.7);
+            Bitmap scaledPhoto = Bitmap.createScaledBitmap(
+                    photo, pixels, pixels, true);
+            parentProfile.setImageBitmap(scaledPhoto);
+            // Perform operations on the bitmap
+           // Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() / 2, bitmap.getHeight() / 2, false);
+            // Use the scaled bitmap
+        } else {
+            // Handle the case where bitmap is null
+            Log.e("ListActivity", "Bitmap is null");
+            // For example, show a default image or notify the user
+        }
+//       float density = ListActivity.this.getResources().getDisplayMetrics().density;
+//       int dp = 140;
+//       int pixels = (int) ((dp * density) + 0.7);
+//       Bitmap scaledPhoto = Bitmap.createScaledBitmap(
+//               photo, pixels, pixels, true);
+//       parentProfile.setImageBitmap(scaledPhoto);
 
 
        ds.close();

@@ -1,7 +1,10 @@
 package com.example.mobiletutorial;
 
+import static android.content.Intent.getIntent;
+
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -45,8 +48,9 @@ public class ChildDataSource {
         return didSucceed;
     }
 
-    public ArrayList<Children> getAllContacts(int id) {
-        String query = "Select * from child where parent_id = " + id;
+    public ArrayList<Children> getAllChildren(int parentId) {
+
+        String query = "Select * from child where id = "+ parentId;
         ArrayList<Children> children = new ArrayList<>();
         try {
             Cursor cursor = database.rawQuery(query, null);
@@ -56,6 +60,7 @@ public class ChildDataSource {
                 c.setId(cursor.getInt(0));
                 c.setFirstName(cursor.getString(2));
                 c.setLastName(cursor.getString(3));
+                c.setBloodgroup(cursor.getString(7));
                 cursor.moveToNext();
                 children.add(c);
             }
@@ -64,6 +69,16 @@ public class ChildDataSource {
             children = new ArrayList<>();
         }
         return children;
+    }
+
+    public boolean deleteChild(int id) {
+        boolean deleted;
+        try {
+            deleted = database.delete("child", "id=" + id, null) > 0;
+        } catch (Exception e) {
+            deleted = false;
+        }
+        return deleted;
     }
 
 
