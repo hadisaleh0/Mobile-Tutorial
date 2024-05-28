@@ -41,16 +41,35 @@
             android:layout_height="wrap_content"
             android:text="delete" />
     </LinearLayout>
-
-    <ImageButton
-        android:id="@+id/imageButtonNewChild"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/user"
-        android:contentDescription="add_a_child"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@+id/rvChild"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageButton
+            android:id="@+id/imageButtonBackToHome"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/back_button"
+            android:contentDescription="Back_to_home" />
+
+        <ImageButton
+            android:id="@+id/imageButtonNewChild"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="250dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/user"
+            android:contentDescription="add_a_child" />
+
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

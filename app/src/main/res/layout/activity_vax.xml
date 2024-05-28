@@ -56,14 +56,15 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/home" />
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/sneezing" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Influenza"
+                    android:textSize="24dp"
                     android:textAlignment="center"
                     android:textColor="@color/colorRed"
                     android:textStyle="bold" />
@@ -92,14 +93,15 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/language" />
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/abnormal" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Hpv"
+                    android:textSize="24dp"
                     android:textAlignment="center"
                     android:textColor="@color/colorRed"
                     android:textStyle="bold" />
@@ -128,14 +130,15 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/chat" />
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/polio" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Polio"
+                    android:textSize="24dp"
                     android:textAlignment="center"
                     android:textColor="@color/colorRed"
                     android:textStyle="bold" />
@@ -164,14 +167,15 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/calendar" />
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/dot" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Mumps"
+                    android:textSize="24dp"
                     android:textAlignment="center"
                     android:textColor="@color/colorRed"
                     android:textStyle="bold" />
@@ -200,14 +204,15 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/widgets" />
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/vaccination" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="BCG"
+                    android:textSize="24dp"
                     android:textAlignment="center"
                     android:textColor="@color/colorRed"
                     android:textStyle="bold" />
@@ -236,14 +241,15 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/info" />
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/back_button" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Back"
+                    android:textSize="24dp"
                     android:textAlignment="center"
                     android:textColor="@color/colorRed"
                     android:textStyle="bold" />

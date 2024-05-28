@@ -13,6 +13,7 @@ import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.text.format.DateFormat;
@@ -26,7 +27,7 @@ public class AddChildrenActivity extends AppCompatActivity implements CustomDial
     Children child;
     TextView birthdayText,TextGender,FirstName,LastName,MotherName,PlaceOfBirth,BloodGroup;
     Button btnGender,btnBirth,btnSave;
-    SQLiteDatabase database;
+    ImageView BackToHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,7 @@ public class AddChildrenActivity extends AppCompatActivity implements CustomDial
         initBirthDialog();
         initGenderDialog();
         initSaveButton();
+        BackToHome();
     }
 
 
@@ -62,7 +64,6 @@ public class AddChildrenActivity extends AppCompatActivity implements CustomDial
                 String motherName = MotherName.getText().toString().trim();
                 String gender = TextGender.getText().toString().trim();
                 try {
-//                    Children child = new Children();
                     Log.e("hi",gender);
                     Log.e("hi",child.getDateOfBirth().toString());
                     child.setFirstName(firstname);
@@ -74,7 +75,7 @@ public class AddChildrenActivity extends AppCompatActivity implements CustomDial
                     child.setPlaceOfBirth(placeOfBirth);
                     dataSource.open();
                     wasSuccessful = dataSource.insertChild(child);
-                    Intent intent = new Intent(AddChildrenActivity.this,HomeActivity.class);
+                    Intent intent = new Intent(AddChildrenActivity.this,ChildListActivity.class);
                     startActivity(intent);
                 } catch (Exception ignored) {
 
@@ -123,14 +124,14 @@ public class AddChildrenActivity extends AppCompatActivity implements CustomDial
         }
     }
 
-    private void ExtarctStrings(){
-        String firstname = FirstName.getText().toString().trim();
-        String lastname = LastName.getText().toString().trim();
-        String placeOfBirth = PlaceOfBirth.getText().toString().trim();
-        String bloodGoup = BloodGroup.getText().toString().trim();
-        String motherName = MotherName.getText().toString().trim();
-        String birthday = birthdayText.getText().toString().trim();
-        String gender = TextGender.getText().toString().trim();
+    private void BackToHome(){
+        BackToHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AddChildrenActivity.this,HomeActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initLayouts(){
@@ -144,6 +145,7 @@ public class AddChildrenActivity extends AppCompatActivity implements CustomDial
         MotherName = findViewById(R.id.editTextMotherName);
         btnGender = findViewById(R.id.buttonSelectGender);
         btnSave = findViewById(R.id.buttonSaveChild);
+        BackToHome = findViewById(R.id.imageViewBackToHomeFromNewChild);
 
     }
 }

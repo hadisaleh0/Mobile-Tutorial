@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 public class ChildListActivity extends AppCompatActivity {
 
-    ImageButton  newChildImageButton;
+    ImageButton  newChildImageButton,BackToHome;
     RecyclerView childrenRecyclerView;
     SwitchMaterial deleteSwitch;
     ParentAdapter adapter;
@@ -33,6 +33,7 @@ public class ChildListActivity extends AppCompatActivity {
         initRecyclerView();
         initDeleteSwitch();
         initNewContactImageButton();
+        BackToHome();
     }
 
     @Override
@@ -90,33 +91,23 @@ public class ChildListActivity extends AppCompatActivity {
         updateRecyclerView();
     }
 
-//    private void initRecyclerView() {
-//        SharedPreferences sharedPreferences = getSharedPreferences("shared_prefs", Context.MODE_PRIVATE);
-//        SharedPreferences.Editor editor = sharedPreferences.edit();
-//        int parentId = sharedPreferences.getInt("id",0);
-//        ChildDataSource dataSource = new ChildDataSource(this);
-//        try {
-//            dataSource.open();
-//            childData = dataSource.getAllChildren(parentId);
-//            dataSource.close();
-//            if(childData.size() > 0) {
-//                childrenRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-//                adapter = new ParentAdapter(childData, this);
-//                childrenRecyclerView.setAdapter(adapter);
-//            }
-//            else{
-//                Intent it = new Intent(ChildListActivity.this, HomeActivity.class);
-//                startActivity(it);
-//            }
-//        } catch (Exception e) {
-//            Toast.makeText(this, "Error Retrieving Data"
-//                    , Toast.LENGTH_LONG).show();
-//        }
-//    }
+    private void BackToHome(){
+        BackToHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ChildListActivity.this,HomeActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+
 
     private void initLayoutComponents() {
         childrenRecyclerView = findViewById(R.id.rvChild);
         deleteSwitch = findViewById(R.id.switchDelete);
         newChildImageButton = findViewById(R.id.imageButtonNewChild);
+        BackToHome = findViewById(R.id.imageButtonBackToHome);
+
     }
 }

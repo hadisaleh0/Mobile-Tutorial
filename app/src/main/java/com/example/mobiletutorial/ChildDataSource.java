@@ -50,7 +50,7 @@ public class ChildDataSource {
 
     public ArrayList<Children> getAllChildren(int parentId) {
 
-        String query = "Select * from child where id = "+ parentId;
+        String query = "Select * from child where parent_id = "+ parentId;
         ArrayList<Children> children = new ArrayList<>();
         try {
             Cursor cursor = database.rawQuery(query, null);
@@ -59,7 +59,6 @@ public class ChildDataSource {
                 Children c = new Children();
                 c.setId(cursor.getInt(0));
                 c.setFirstName(cursor.getString(2));
-                c.setLastName(cursor.getString(3));
                 c.setBloodgroup(cursor.getString(7));
                 cursor.moveToNext();
                 children.add(c);
